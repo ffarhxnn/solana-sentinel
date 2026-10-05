@@ -30,7 +30,7 @@ The main changes are in `packages/database`, `packages/solana/src/rpc-reader.ts`
 
 The initial raw-RPC interpreter accepted fee-adjusted direct SOL transfers and isolated recognized Jupiter token routes. It verified the transaction identity, finalized history metadata, wallet account role, route authority and changed token-account ownership. Native rent, account closure and combined actions abstained. The existing Helius path remains available separately.
 
-The baseline was recorded before the native-sale fix. Evidence labels identify account/instruction/balance paths and explorer links. The added path requires a single Jupiter route, one Pump `sell_v2` call with its exact instruction discriminator, amount and account roles, an exact wallet-owned token debit, a temporary WSOL account created and closed back to that wallet, and consistent fee/native balance accounting. Extra sales, altered authority, wrong amounts, wrong mint/owner, unrelated transfers and missing proofs abstain. The discriminator/account layout was checked against the [official Pump IDL](https://github.com/pump-fun/pump-public-docs/blob/main/idl/pump.json), and the quote behavior against the [official sell instruction documentation](https://github.com/pump-fun/pump-public-docs/blob/main/docs/instructions/SELL.md).
+The baseline was recorded before the native-sale fix. Evidence labels identify account/instruction/balance paths and explorer links. The added path requires a single Jupiter route, one Pump `sell_v2` call with its exact instruction discriminator, amount and account roles, an exact wallet-owned token debit, a temporary WSOL account created and closed back to that wallet, and consistent fee/native balance accounting. Extra sales, altered authority, wrong amounts, wrong mint/owner, unrelated transfers and missing proofs abstain. The discriminator/account layout was checked against the `official Pump IDL` (local operational artifact; omitted from this snapshot), and the quote behavior against the `official sell instruction documentation` (local operational artifact; omitted from this snapshot).
 
 | Metric | Before | After |
 |---|---:|---:|
@@ -81,7 +81,7 @@ python3 scripts/staging-db.py restore-check
 git diff --check
 ```
 
-The validation helper passes only the disposable test URL. Full output is in [validate-release.log](validate-release.log). Earlier failed/partial collection and typecheck attempts are retained in `initial-tests.json` and `validate-initial.log`; subsequent passing logs are preserved separately.
+The validation helper passes only the disposable test URL. Full output is in `validate-release.log` (local operational artifact; omitted from this snapshot). Earlier failed/partial collection and typecheck attempts are retained in `initial-tests.json` and `validate-initial.log`; subsequent passing logs are preserved separately.
 
 The production-mode browser checks used the built app. Private staging required masked operator sign-in, hid paper initialization, showed stopped-worker staleness and created two live journal rules. A separate in-memory process with explicit demo/paper opt-in verified initialization, SCAMX rejection, WIF paper fill, duplicate rejection, wallet/lab panels and a demo alert rule. [Operator evidence](browser-operator-check.json), [API evidence](staging-api-check.json), [demo evidence](browser-demo-check.json) and screenshots are retained. The Playwright CI command itself was not run locally; these browser checks used the production server rather than the CI development server.
 

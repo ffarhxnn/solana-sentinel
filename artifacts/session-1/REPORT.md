@@ -31,7 +31,7 @@ The Helius stream class opens no socket. Its former reconnect timer did not reco
 
 Two distinct paper proposals previously could read one cash snapshot, both commit orders, and overwrite each other's portfolio updates. A concurrent mark and fill had the same risk. Production fill and mark paths now compare the expected portfolio and positions inside a serialized write. PostgreSQL uses the same locked portfolio row and transaction for both paths. Stale work fails before ledger writes; its caller must explicitly re-evaluate.
 
-See [forensics.md](forensics.md) for the broader architecture map, code references and unresolved findings. It distinguishes baseline observations from corrected behavior.
+See `forensics.md` (local operational artifact; omitted from this snapshot) for the broader architecture map, code references and unresolved findings. It distinguishes baseline observations from corrected behavior.
 
 ## 3. Changes made
 
@@ -62,7 +62,7 @@ See [forensics.md](forensics.md) for the broader architecture map, code referenc
 - `stream-health.test.ts` (2): unavailable stub and explicit demo heartbeat shutdown.
 - `cli-shutdown.test.ts` (1): actual CLI process, stalled local Helius-shaped body, SIGINT, exit 130 and writer-lock removal.
 
-A separate replay of 37 regression assertions against original source aliases produced **31 failures and 6 passes**. These are assertion counts, not 31 independent bugs. The production accounting cases both committed against the baseline and only one commits on the guarded branch. Malformed data, false readiness and metadata identity defects also reproduced. Raw evidence: [regressions-original-baseline.json](regressions-original-baseline.json). New APIs naturally do not exist on that baseline; their missing-method failure is not counted as a pre-existing implementation defect.
+A separate replay of 37 regression assertions against original source aliases produced **31 failures and 6 passes**. These are assertion counts, not 31 independent bugs. The production accounting cases both committed against the baseline and only one commits on the guarded branch. Malformed data, false readiness and metadata identity defects also reproduced. Raw evidence: `regressions-original-baseline.json` (local operational artifact; omitted from this snapshot). New APIs naturally do not exist on that baseline; their missing-method failure is not counted as a pre-existing implementation defect.
 
 ## 5. Validation evidence and reproduction
 
@@ -79,7 +79,7 @@ node node_modules/eslint/bin/eslint.js scripts/benchmark-ingestion.ts --max-warn
 git diff --check
 ```
 
-`pnpm validate` runs workspace typecheck, root and web lint, tests, package/web/worker builds and basic secret scan. Exit 0. Tests: 273 passed / 2 skipped / 275 total, 26 files. No warnings in lint; builds passed; no high-confidence secret patterns found. Raw log: [validate.log](validate.log); machine-readable tests: [tests-final.json](tests-final.json).
+`pnpm validate` runs workspace typecheck, root and web lint, tests, package/web/worker builds and basic secret scan. Exit 0. Tests: 273 passed / 2 skipped / 275 total, 26 files. No warnings in lint; builds passed; no high-confidence secret patterns found. Raw log: `validate.log` (local operational artifact; omitted from this snapshot); machine-readable tests: `tests-final.json` (local operational artifact; omitted from this snapshot).
 
 The initial baseline reported 196 passing tests in 17 files. Its two PG tests could silently return early when the database was unavailable. This session makes them visibly skipped unless `SENTINEL_TEST_DATABASE_URL` is supplied; an explicitly configured database failure now fails the tests. No dedicated PG test service was configured, and no live database claim is made. The system pnpm 11 wrapper initially attempted dependency reinstallation and failed its build-policy check; pinned pnpm 10.33.3 recovered installation. No lockfile or dependency policy changes were retained.
 
