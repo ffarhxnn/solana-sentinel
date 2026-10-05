@@ -1,0 +1,10 @@
+title = "Portfolio secret scanning"
+[extend]
+useDefault = true
+
+[[rules]]
+id = "generic-api-key"
+[[rules.allowlists]]
+description = "Public Solana account addresses in transaction replay fixtures"
+regexTarget = "line"
+regexes = ['''"accountKey": "[1-9A-HJ-NP-Za-km-z]{32,44}"''']
